@@ -1,16 +1,17 @@
 package ru.fonin.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ru.fonin.web.forms.UserForm;
-import ru.fonin.web.models.User;
 import ru.fonin.web.repositories.UserRepository;
 
-import java.util.List;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.net.http.HttpResponse;
 
 @Controller
 public class UsersWithJpaController {
@@ -21,12 +22,25 @@ public class UsersWithJpaController {
     private UserRepository userRepository;
 
 
-    @RequestMapping(path = "/start",method = RequestMethod.GET)
+    @RequestMapping(path = "/login",method = RequestMethod.GET)
     public ModelAndView getStartPage(){
-        ModelAndView modelAndView = new ModelAndView("start");
+        ModelAndView modelAndView = new ModelAndView("home");
+//        modelAndView.
         return modelAndView;
     }
 
+    @RequestMapping(path = "/SignIn",method = RequestMethod.POST)
+    public String Loggining(UserForm userForm,
+                            @CookieValue(value = "foo", defaultValue = "nothing") String cook
+                            ,HttpServletResponse response){
+        String password = userForm.getPassword();
 
+//        ModelAndView modelAndView= new ModelAndView();
 
+        response.addCookie(new Cookie("foo","someCookie"));
+
+        String login    = userForm.getLogin();
+
+       return "redirect:/hello";
+    }
 }
