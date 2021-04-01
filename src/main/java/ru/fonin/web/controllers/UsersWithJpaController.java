@@ -30,17 +30,31 @@ public class UsersWithJpaController {
     }
 
     @RequestMapping(path = "/SignIn",method = RequestMethod.POST)
-    public String Loggining(UserForm userForm,
+    public ModelAndView Loggining(UserForm userForm,
                             @CookieValue(value = "foo", defaultValue = "nothing") String cook
                             ,HttpServletResponse response){
+        String login    = userForm.getLogin();
         String password = userForm.getPassword();
 
-//        ModelAndView modelAndView= new ModelAndView();
 
-        response.addCookie(new Cookie("foo","someCookie"));
 
-        String login    = userForm.getLogin();
+        ModelAndView modelAndView= new ModelAndView("home");
 
-       return "redirect:/hello";
+//        response.addCookie(new Cookie("foo2","someCookie"));
+
+
+
+        return modelAndView;
+//       return "redirect:/hello";
     }
+
+
+
+
+//    @RequestMapping(path = "/hello", method = RequestMethod.GET)
+//    public ModelAndView mainPage(){
+//
+//    }
+
+
 }
